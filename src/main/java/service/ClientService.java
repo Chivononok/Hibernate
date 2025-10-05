@@ -1,11 +1,13 @@
 package service;
 
 import entity.Client;
+import entity.ClientPremium;
 import repository.jpa.ClientRepository;
 
 import java.util.List;
 
 public class ClientService {
+    /*
     public void addClient(Client client){
         ClientRepository clientRepository = new ClientRepository();
         clientRepository.addClient(client);
@@ -31,5 +33,22 @@ public class ClientService {
         Client client = getClientById(id);
         client.setStatus(status);
         clientRepository.updateClient(client);
+    }
+
+
+     */
+
+    public void addClientS(Client client){
+        ClientRepository clientRepository = new ClientRepository();
+        clientRepository.addClientS(client);
+    }
+    public Client findClientByIdS(Long id){
+        ClientRepository clientRepository = new ClientRepository();
+        return clientRepository.findByIdS(id);
+    }
+
+    public List<ClientPremium> findAllPremium(){
+        ClientRepository clientRepository = new ClientRepository();
+        return  clientRepository.findAllPremium();
     }
 }
