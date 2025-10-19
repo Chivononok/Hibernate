@@ -27,4 +27,9 @@ public class FitroomService {
         FitRoomsRepository fitRoomsRepository = new FitRoomsRepository();
         return fitRoomsRepository.findAllSub();
     }
+
+    public void deleteById(Long id){
+        FitRoomsRepository fitRoomsRepository = new FitRoomsRepository();
+        fitRoomsRepository.deleteById(id);
+    }
 }

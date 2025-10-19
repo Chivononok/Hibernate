@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -21,6 +23,8 @@ public class FitRoom {
     private Long capacity;
     private String status;
     private Double price;
+    @OneToMany(mappedBy = "fitRoom", cascade = CascadeType.ALL)
+    private List<Sign> signList;
 
     public FitRoom(String roomName, String roomNumber, Long capacity, String status, Double price){
         this.roomName = roomName;
