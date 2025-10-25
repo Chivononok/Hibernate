@@ -1,13 +1,17 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Client {
     @Id
+    @SequenceGenerator(name="clientsSequence", sequenceName = "s_client", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsSequence")
     private Long id;
     private String name;
     private String surname;
@@ -15,17 +19,18 @@ public class Client {
     private String phone;
     private String status;
     private Double sum;
+    @Embedded
+    private Address address;
 
-    public Client(){
 
-    }
-    public Client(Long id, String name,String surname, Integer age, String phone, String status, Double sum){
-        this.id = id;
+    public Client(String name,String surname, Integer age, String phone, String status, Double sum, Address address){
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.phone = phone;
         this.status = status;
         this.sum = sum;
+        this.address = address;
     }
+
 }
