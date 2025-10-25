@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,9 @@ public class Opportunity {
     private Long id;
     private String opportunityName;
     private Double price;
+
+    @OneToMany()
+    private List<FitRoom> fitRoomList;
 
     public Opportunity(String opportunityName, Double price){
         this.opportunityName = opportunityName;

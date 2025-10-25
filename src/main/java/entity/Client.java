@@ -3,6 +3,8 @@ package entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -21,6 +23,8 @@ public class Client {
     private Double sum;
     @Embedded
     private Address address;
+    @OneToMany(mappedBy = "client")
+    private List<Sign> signList;
 
 
     public Client(String name,String surname, Integer age, String phone, String status, Double sum, Address address){

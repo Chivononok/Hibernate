@@ -23,16 +23,17 @@ public class HibernateJavaConfig {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
         configuration = new Configuration();
-        /*
+
         configuration.addAnnotatedClass(Client.class);
         configuration.addAnnotatedClass(FitRoom.class);
         configuration.addAnnotatedClass(Opportunity.class);
-        configuration.addAnnotatedClass(FitroomWithSubselect.class);
-        configuration.addAnnotatedClass(ClientPremium.class);
-        */
+        //configuration.addAnnotatedClass(FitroomWithSubselect.class);
+        //configuration.addAnnotatedClass(ClientPremium.class);
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Visitor.class);
-        configuration.addAnnotatedClass(Worker.class);
+        //configuration.addAnnotatedClass(Worker.class);
+        configuration.addAnnotatedClass(Visit.class);
+        configuration.addAnnotatedClass(Sign.class);
         serviceRegistryBuilder = new StandardServiceRegistryBuilder();
         serviceRegistryBuilder.applySettings(properties);
     }

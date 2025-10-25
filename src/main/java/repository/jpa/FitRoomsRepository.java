@@ -54,4 +54,15 @@ public class FitRoomsRepository {
         session.close();
         return fitRoomList;
     }
+
+    public void deleteById(Long id){
+        Session session = sessionFactory.openSession();
+        session.getTransaction().begin();
+        FitRoom fitRoom = session.get(FitRoom.class, id);
+        if (fitRoom != null){
+            session.remove(fitRoom);
+        }
+        session.getTransaction().commit();
+        session.close();
+    }
 }

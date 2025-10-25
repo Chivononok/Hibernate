@@ -1,7 +1,8 @@
 import entity.*;
-import repository.jpa.FitRoomsRepository;
 import service.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -9,7 +10,8 @@ public class Main {
         //run5HomeWork();
         //run6HomeWork();
         //run7HomeWork();
-        run8HomeWork();
+        //run8HomeWork();
+        run9HomeWork();
     }
     public static void run5HomeWork(){
         /*
@@ -79,7 +81,7 @@ public class Main {
         //==============
     }
 
-    public static  void run8HomeWork(){
+    public static void run8HomeWork(){
         VisitorService visitorService = new VisitorService();
         WorkerService workerService = new WorkerService();
 
@@ -100,5 +102,71 @@ public class Main {
             worker.setBirthdate("1"+i+".04.1987");
             workerService.addWorker(worker);
         }
+    }
+
+    public static void run9HomeWork(){
+
+        //=== связь между таблицами Услуги и Помещения 1 ко многим ===
+        OpportunityService opportunityService = new OpportunityService();
+        FitroomService fitroomService = new FitroomService();
+        FitRoom fitRoom1 = new FitRoom("зал первый", "142 ", 9L, "ACTIVE", 22.3D);
+        FitRoom fitRoom2 = new FitRoom("зал второй", "17 ", 16L, "ACTIVE", 94D);
+        List<FitRoom> fitRoomList = new ArrayList<>();
+        fitRoomList.add(fitRoom1);
+        fitRoomList.add(fitRoom2);
+        fitroomService.addFitroom(fitRoom1);
+        fitroomService.addFitroom(fitRoom2);
+        Opportunity opportunity = new Opportunity("услуга первая" , 170D);
+        opportunity.setFitRoomList(fitRoomList);
+        opportunityService.addOpportunity(opportunity);
+        //=============================================================
+
+        //=== связь Посетитель-Посещения Один ко многим ===
+        VisitorService visitorService = new VisitorService();
+        VisitService visitService = new VisitService();
+        Visitor visitor = new Visitor("27.04.2025","21.04.2025" , "ACTIVE",19D);
+        visitor.setAddress(new Address("Minsk", "Яблоневая", "6а", "220025"));
+        visitor.setName("Иван");
+        visitor.setSurname("Спортивный");
+        visitor.setBirthdate("07.11.1983");
+
+        Visit visit1 = new Visit("21.04.2025", new BigDecimal(4));
+        Visit visit2 = new Visit("27.04.2025", new BigDecimal(15));
+
+        List<Visit> visitList = new ArrayList<>();
+        visitList.add(visit1);
+        visitList.add(visit2);
+
+        visitor.setVisitList(visitList);
+
+        visitService.addVisit(visit1);
+        visitService.addVisit(visit2);
+        visitorService.addVisitor(visitor);
+        //=================================================
+
+        //===добавление таблицы с Записью и связь Многие к одному с Клиентом и Залами ===
+        ClientService clientService = new ClientService();
+        SignService signService = new SignService();
+
+        Sign sign1 = new Sign("02.12.2024", "17:30");
+        Sign sign2 = new Sign("07.12.2024", "14:05");
+
+        Client client = new Client("Сергей", "Андронов", 34, "111111111", "ACTIVE", 76D, new Address("Minsk", "Космонавтов", "3", "220011"));
+        sign1.setClient(client);
+        sign2.setClient(client);
+
+        clientService.addClientS(client);
+
+        FitRoom fitRoom = new FitRoom("зал третий", "127 ", 17L, "ACTIVE", 19.17);
+        sign1.setFitRoom(fitRoom);
+        sign2.setFitRoom(fitRoom);
+
+        fitroomService.addFitroom(fitRoom);
+
+        signService.addSign(sign1);
+        signService.addSign(sign2);
+        //============================================================
+        //==== Каскадное удаление зала ===
+        fitroomService.deleteById(10L);
     }
 }
