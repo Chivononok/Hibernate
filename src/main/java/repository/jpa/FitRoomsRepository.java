@@ -3,10 +3,13 @@ package repository.jpa;
 import config.HibernateJavaConfig;
 import entity.FitRoom;
 import entity.FitroomWithSubselect;
+import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FitRoomsRepository {
     private final SessionFactory sessionFactory;
@@ -64,5 +67,17 @@ public class FitRoomsRepository {
         }
         session.getTransaction().commit();
         session.close();
+    }
+
+    public Map<String, Double> getPricePerUser(){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select f.roomName as roomName, f.price/f.capacity as price from FitRoom f group by roomName, price");
+        List<Object[]> fitrooms = (List<Object[]>) query.getResultList();
+        Map<String, Double> pricePerUser = new HashMap<>();
+        fitrooms.forEach(o -> {
+            pricePerUser.put(String.valueOf(o[0]), (Double) o[1]);
+        });
+        session.close();
+        return pricePerUser;
     }
 }

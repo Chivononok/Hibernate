@@ -8,4 +8,19 @@ public class WorkerService {
         WorkerRepository workerRepository = new WorkerRepository();
         workerRepository.addWorker(worker);
     }
+
+    public Worker getWorkerWithMaxSalary(){
+        WorkerRepository workerRepository = new WorkerRepository();
+        return workerRepository.getWorkerWithMaxSalary();
+    }
+
+    public Worker getWorkerWithMinSalary(){
+        WorkerRepository workerRepository = new WorkerRepository();
+        return workerRepository.getWorkerWithMinSalary();
+    }
+
+    public Long getCostPerMonth(){
+        WorkerRepository workerRepository = new WorkerRepository();
+        return workerRepository.getCostPerMonth();
+    }
 }

@@ -5,6 +5,7 @@ import entity.FitroomWithSubselect;
 import repository.jpa.FitRoomsRepository;
 
 import java.util.List;
+import java.util.Map;
 
 public class FitroomService {
 
@@ -31,5 +32,10 @@ public class FitroomService {
     public void deleteById(Long id){
         FitRoomsRepository fitRoomsRepository = new FitRoomsRepository();
         fitRoomsRepository.deleteById(id);
+    }
+
+    public Map<String, Double> getPricePerUser(){
+        FitRoomsRepository fitRoomsRepository = new FitRoomsRepository();
+        return fitRoomsRepository.getPricePerUser();
     }
 }
