@@ -4,6 +4,7 @@ import service.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args){
@@ -11,7 +12,9 @@ public class Main {
         //run6HomeWork();
         //run7HomeWork();
         //run8HomeWork();
-        run9HomeWork();
+        //run9HomeWork();
+        //runHomeWork10();
+        run11HomeWork();
     }
     public static void run5HomeWork(){
         /*
@@ -168,5 +171,56 @@ public class Main {
         //============================================================
         //==== Каскадное удаление зала ===
         fitroomService.deleteById(10L);
+    }
+
+    public static void runHomeWork10(){
+
+        //=== найти клиента по имени ===
+        System.out.println("===== Ищем клиентов по имене Сергей =====");
+        ClientService clientService = new ClientService();
+        List<Client> clientList = clientService.fiendByNameJPQL("Сергей");
+        System.out.println(clientList);
+        System.out.println("=========================================");
+
+        //=== найти сотрудника с максимальной/минимальной зарплатой ===
+        System.out.println("===== Ищем сотрудника с максимальной зп =====");
+        WorkerService workerService = new WorkerService();
+        Worker workerWithMaxSalary = workerService.getWorkerWithMaxSalary();
+        System.out.println("Работник с max зар. платой: " + workerWithMaxSalary);
+        Worker workerWithMinSalary = workerService.getWorkerWithMinSalary();
+        System.out.println("Работник с min зар. платой: " + workerWithMinSalary);
+        System.out.println("=============================================");
+
+        //=== найти расходы в месяц на персонал ===
+        System.out.println("Расходы в месяц на персонал: " + workerService.getCostPerMonth());
+        //=== найти стоимость 1 человекр-места в каждом зале ===
+        FitroomService fitroomService = new FitroomService();
+        Map<String, Double> pricePerUser = fitroomService.getPricePerUser();
+        System.out.println(pricePerUser);
+    }
+
+    public static void run11HomeWork(){
+
+        //=== получение всех сотрудников с использованием criteria ===
+        WorkerService workerService = new WorkerService();
+        List<Worker> workerList = workerService.getAllWorkersCriteria();
+        System.out.println(workerList);
+
+        //=== услуга с минимальной ценой ===
+        OpportunityService opportunityService = new OpportunityService();
+        Opportunity opportunityWithMinPrice = opportunityService.getOpportunityWithMinPriceCriteria();
+        System.out.println(opportunityWithMinPrice);
+
+        //=== общее кол-во человек в помещении ===
+        FitroomService fitroomService = new FitroomService();
+        System.out.println("Общее число клиентов в залах одновременно: " + fitroomService.getAllCountClientsInTimeCriteria());
+
+        //=== поиск пользователей по диапазону возраста (от 15 до 18) ===
+        ClientService clientService = new ClientService();
+        System.out.println(clientService.getClientBetweenAgeCriteria(15L, 18L));
+
+        //=== поиск залов, которые посещали пользователи старше 32 лет ===
+        System.out.println(fitroomService.getRoomsVisitedByClientsOverThan(32L));
+
     }
 }

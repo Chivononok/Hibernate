@@ -7,6 +7,9 @@ import entity.Client;
 import entity.ClientPremium;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -87,4 +90,24 @@ public class ClientRepository {
         session.close();
         return  clientPremiumList;
     }
+    public List<Client> findByNameJPQL(String name){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select s from Client s where s.name=:name");
+        query.setParameter("name", name);
+        List<Client> clientList = query.getResultList();
+        session.close();
+        return clientList;
+    }
+
+    public List<Client> getClientBetweenAgeCriteria(Long minAge, Long maxAge){
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Client> criteriaQuery =  criteriaBuilder.createQuery(Client.class);
+        Root<Client> clientRoot = criteriaQuery.from(Client.class);
+        criteriaQuery.select(clientRoot).where(criteriaBuilder
+                .between(clientRoot.get("age"), minAge, maxAge))
+                .orderBy(criteriaBuilder.desc(clientRoot.get("age")));
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
 }
