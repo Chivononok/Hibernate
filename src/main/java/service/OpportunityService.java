@@ -9,4 +9,9 @@ public class OpportunityService {
         OpportunityRepository opportunityRepository = new OpportunityRepository();
         opportunityRepository.addOpportunity(opportunity);
     }
+
+    public Opportunity getOpportunityWithMinPriceCriteria(){
+        OpportunityRepository opportunityRepository= new OpportunityRepository();
+        return opportunityRepository.getOpportunityWithMinPriceCriteria();
+    }
 }

@@ -13,7 +13,8 @@ public class Main {
         //run7HomeWork();
         //run8HomeWork();
         //run9HomeWork();
-        runHomeWork10();
+        //runHomeWork10();
+        run11HomeWork();
     }
     public static void run5HomeWork(){
         /*
@@ -196,5 +197,30 @@ public class Main {
         FitroomService fitroomService = new FitroomService();
         Map<String, Double> pricePerUser = fitroomService.getPricePerUser();
         System.out.println(pricePerUser);
+    }
+
+    public static void run11HomeWork(){
+
+        //=== получение всех сотрудников с использованием criteria ===
+        WorkerService workerService = new WorkerService();
+        List<Worker> workerList = workerService.getAllWorkersCriteria();
+        System.out.println(workerList);
+
+        //=== услуга с минимальной ценой ===
+        OpportunityService opportunityService = new OpportunityService();
+        Opportunity opportunityWithMinPrice = opportunityService.getOpportunityWithMinPriceCriteria();
+        System.out.println(opportunityWithMinPrice);
+
+        //=== общее кол-во человек в помещении ===
+        FitroomService fitroomService = new FitroomService();
+        System.out.println("Общее число клиентов в залах одновременно: " + fitroomService.getAllCountClientsInTimeCriteria());
+
+        //=== поиск пользователей по диапазону возраста (от 15 до 18) ===
+        ClientService clientService = new ClientService();
+        System.out.println(clientService.getClientBetweenAgeCriteria(15L, 18L));
+
+        //=== поиск залов, которые посещали пользователи старше 32 лет ===
+        System.out.println(fitroomService.getRoomsVisitedByClientsOverThan(32L));
+
     }
 }

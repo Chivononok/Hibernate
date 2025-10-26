@@ -3,9 +3,15 @@ package repository.jpa;
 import config.HibernateJavaConfig;
 import entity.User;
 import entity.Worker;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import java.util.List;
 
 public class WorkerRepository {
     private final SessionFactory sessionFactory;
@@ -42,5 +48,15 @@ public class WorkerRepository {
         Long costPerMonth = (Long) query.getSingleResult();
         session.close();
         return costPerMonth;
+    }
+
+    public List<Worker> getAllWorkersCriteria(){
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Worker> criteriaQuery = criteriaBuilder.createQuery(Worker.class);
+        Root<Worker> root = criteriaQuery.from(Worker.class);
+        criteriaQuery.select(root);
+        List<Worker> workerList = entityManager.createQuery(criteriaQuery).getResultList();
+        return workerList;
     }
 }

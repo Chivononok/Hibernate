@@ -1,10 +1,7 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class FitRoom {
     @Id
     @SequenceGenerator(name="fitroomSequence", sequenceName = "s_fitroom", allocationSize = 1)
@@ -23,7 +21,7 @@ public class FitRoom {
     private Long capacity;
     private String status;
     private Double price;
-    @OneToMany(mappedBy = "fitRoom", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "fitRoom", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Sign> signList;
 
     public FitRoom(String roomName, String roomNumber, Long capacity, String status, Double price){

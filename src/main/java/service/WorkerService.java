@@ -3,6 +3,8 @@ package service;
 import entity.Worker;
 import repository.jpa.WorkerRepository;
 
+import java.util.List;
+
 public class WorkerService {
     public void addWorker(Worker worker){
         WorkerRepository workerRepository = new WorkerRepository();
@@ -22,5 +24,10 @@ public class WorkerService {
     public Long getCostPerMonth(){
         WorkerRepository workerRepository = new WorkerRepository();
         return workerRepository.getCostPerMonth();
+    }
+
+    public List<Worker> getAllWorkersCriteria(){
+        WorkerRepository workerRepository = new WorkerRepository();
+        return workerRepository.getAllWorkersCriteria();
     }
 }

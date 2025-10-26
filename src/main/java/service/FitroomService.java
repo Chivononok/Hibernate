@@ -38,4 +38,14 @@ public class FitroomService {
         FitRoomsRepository fitRoomsRepository = new FitRoomsRepository();
         return fitRoomsRepository.getPricePerUser();
     }
+
+    public Long getAllCountClientsInTimeCriteria(){
+        FitRoomsRepository fitRoomsRepository = new FitRoomsRepository();
+        return fitRoomsRepository.getAllCountClientsInTimeCriteria();
+    }
+
+    public List<FitRoom> getRoomsVisitedByClientsOverThan(Long age){
+        FitRoomsRepository fitRoomsRepository = new FitRoomsRepository();
+        return fitRoomsRepository.getRoomsVisitedByClientsOverThan(age);
+    }
 }

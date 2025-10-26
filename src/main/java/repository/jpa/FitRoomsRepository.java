@@ -1,9 +1,16 @@
 package repository.jpa;
 
 import config.HibernateJavaConfig;
+import entity.Client;
 import entity.FitRoom;
 import entity.FitroomWithSubselect;
+import entity.Opportunity;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -79,5 +86,32 @@ public class FitRoomsRepository {
         });
         session.close();
         return pricePerUser;
+    }
+
+    public Long getAllCountClientsInTimeCriteria(){
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery =  criteriaBuilder.createQuery(Long.class);
+        Root<FitRoom> rootFitroom = criteriaQuery.from(FitRoom.class);
+        criteriaQuery.select(criteriaBuilder.sum(rootFitroom.get("capacity")));
+        Long countClients = entityManager.createQuery(criteriaQuery).getSingleResult();
+        entityManager.close();
+        return countClients;
+    }
+
+    public List<FitRoom> getRoomsVisitedByClientsOverThan(Long age) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<FitRoom> criteriaQuery = criteriaBuilder.createQuery(FitRoom.class);
+        Root<FitRoom> fitRoomRoot = criteriaQuery.from(FitRoom.class);
+        Join<Object, Object> signJoin = fitRoomRoot.join("signList");
+        Join<Object, Object> clientJoin = signJoin.join("client");
+        criteriaQuery.select(fitRoomRoot)
+                .where(criteriaBuilder.gt(clientJoin.get("age"), age))
+                .distinct(true);
+
+        List<FitRoom> fitRoomList = entityManager.createQuery(criteriaQuery).getResultList();
+        entityManager.close();
+        return fitRoomList;
     }
 }

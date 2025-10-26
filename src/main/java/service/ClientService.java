@@ -56,4 +56,9 @@ public class ClientService {
         ClientRepository clientRepository = new ClientRepository();
         return clientRepository.findByNameJPQL(name);
     }
+
+    public List<Client> getClientBetweenAgeCriteria(Long minAge, Long maxAge){
+        ClientRepository clientRepository = new ClientRepository();
+        return clientRepository.getClientBetweenAgeCriteria(minAge, maxAge);
+    }
 }
