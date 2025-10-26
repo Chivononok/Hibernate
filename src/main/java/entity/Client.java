@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Client {
     @Id
     @SequenceGenerator(name="clientsSequence", sequenceName = "s_client", allocationSize = 1)
@@ -23,7 +24,7 @@ public class Client {
     private Double sum;
     @Embedded
     private Address address;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Sign> signList;
 
 

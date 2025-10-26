@@ -87,4 +87,14 @@ public class ClientRepository {
         session.close();
         return  clientPremiumList;
     }
+    public List<Client> findByNameJPQL(String name){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select s from Client s where s.name=:name");
+        query.setParameter("name", name);
+        List<Client> clientList = query.getResultList();
+        session.close();
+        return clientList;
+    }
+
+
 }

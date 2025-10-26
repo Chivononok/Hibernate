@@ -4,6 +4,7 @@ import service.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args){
@@ -11,7 +12,8 @@ public class Main {
         //run6HomeWork();
         //run7HomeWork();
         //run8HomeWork();
-        run9HomeWork();
+        //run9HomeWork();
+        runHomeWork10();
     }
     public static void run5HomeWork(){
         /*
@@ -168,5 +170,31 @@ public class Main {
         //============================================================
         //==== Каскадное удаление зала ===
         fitroomService.deleteById(10L);
+    }
+
+    public static void runHomeWork10(){
+
+        //=== найти клиента по имени ===
+        System.out.println("===== Ищем клиентов по имене Сергей =====");
+        ClientService clientService = new ClientService();
+        List<Client> clientList = clientService.fiendByNameJPQL("Сергей");
+        System.out.println(clientList);
+        System.out.println("=========================================");
+
+        //=== найти сотрудника с максимальной/минимальной зарплатой ===
+        System.out.println("===== Ищем сотрудника с максимальной зп =====");
+        WorkerService workerService = new WorkerService();
+        Worker workerWithMaxSalary = workerService.getWorkerWithMaxSalary();
+        System.out.println("Работник с max зар. платой: " + workerWithMaxSalary);
+        Worker workerWithMinSalary = workerService.getWorkerWithMinSalary();
+        System.out.println("Работник с min зар. платой: " + workerWithMinSalary);
+        System.out.println("=============================================");
+
+        //=== найти расходы в месяц на персонал ===
+        System.out.println("Расходы в месяц на персонал: " + workerService.getCostPerMonth());
+        //=== найти стоимость 1 человекр-места в каждом зале ===
+        FitroomService fitroomService = new FitroomService();
+        Map<String, Double> pricePerUser = fitroomService.getPricePerUser();
+        System.out.println(pricePerUser);
     }
 }
